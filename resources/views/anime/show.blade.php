@@ -88,16 +88,13 @@
                                 </div>
 
                                 <div>
-                                    <label class="block text-sm font-medium mb-2">Your Score (0-10)</label>
-                                    <input
-                                        type="number"
-                                        name="score"
-                                        value="{{ $tracking['score'] }}"
-                                        min="0"
-                                        max="10"
-                                        step="0.5"
-                                        class="w-full bg-gray-600 rounded-lg px-3 py-2 focus:outline-none focus:ring-1 focus:ring-purple-400"
-                                    >
+                                    <label class="block text-sm font-medium mb-2">Your Rating</label>
+                                    <select name="rating_tier" class="w-full bg-gray-600 rounded-lg px-3 py-2 focus:outline-none focus:ring-1 focus:ring-purple-400">
+                                        <option value="" {{ empty($tracking['rating_tier']) ? 'selected' : '' }}>Not rated</option>
+                                        <option value="meh" {{ ($tracking['rating_tier'] ?? null) === 'meh' ? 'selected' : '' }}>Meh</option>
+                                        <option value="aight" {{ ($tracking['rating_tier'] ?? null) === 'aight' ? 'selected' : '' }}>Aight</option>
+                                        <option value="top_tier" {{ ($tracking['rating_tier'] ?? null) === 'top_tier' ? 'selected' : '' }}>Top tier</option>
+                                    </select>
                                 </div>
                             </div>
 

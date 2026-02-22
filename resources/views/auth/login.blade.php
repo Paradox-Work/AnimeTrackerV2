@@ -27,16 +27,14 @@
             </div>
 
             <div class="mt-6 flex items-center justify-between">
-                @if (Route::has('password.request'))
-                    <a href="{{ route('password.request') }}" class="text-sm text-gray-300 hover:text-white">Forgot password?</a>
-                @endif
+                <div class="mt-6 text-sm text-gray-300">
+                    <a href="{{ route('register') }}" class="hover:text-white">Register</a>
+                </div>
                 <button type="submit" class="bg-purple-600 hover:bg-purple-700 px-4 py-2 rounded-lg font-semibold">Login</button>
             </div>
         </form>
 
-        <div class="mt-6 text-sm text-gray-300">
-            <a href="{{ route('register') }}" class="hover:text-white">Register</a>
-        </div>
+        
     </div>
 </div>
 @endsection

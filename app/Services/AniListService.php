@@ -23,7 +23,6 @@ private const TAG_GENRES = [
     'Gourmet',
     'War',
     'Historical',
-    'Suspense',
     'Award Winning',
 ];
 
@@ -33,7 +32,6 @@ private const TAG_MAPPING = [
     'Gourmet' => 'Restaurant',  // Changed from 'Food' to 'Restaurant'
     'War' => 'Military',
     'Historical' => 'Historical',
-    'Suspense' => 'Suspense',
     'Award Winning' => null,  // Keep as null
 ];
 

@@ -22,13 +22,10 @@ class AnimeController extends Controller
         'Adventure',
         'Romance',
         'Mystery',
-        'Supernatural',
         'Slice of Life',
         'Horror',
         'Sports',
-        'Suspense',
         'Crime',
-        'Award Winning',
         'Music',
         'War',
         'Thriller',
@@ -92,6 +89,7 @@ class AnimeController extends Controller
             'watched_episodes' => 0,
             'status' => 'watching',
             'score' => null,
+            'rating_tier' => null,
         ];
 
         if (auth()->check()) {
@@ -105,6 +103,7 @@ class AnimeController extends Controller
                     'watched_episodes' => $trackingRecord->watched_episodes,
                     'status' => $trackingRecord->status,
                     'score' => $trackingRecord->score,
+                    'rating_tier' => $this->scoreToRatingTier($trackingRecord->score),
                 ];
             }
         }
@@ -121,7 +120,7 @@ class AnimeController extends Controller
         $validated = $request->validate([
             'watched_episodes' => 'required|integer|min:0',
             'status' => 'required|in:watching,completed,plan_to_watch,paused',
-            'score' => 'nullable|numeric|min:0|max:10',
+            'rating_tier' => 'nullable|in:meh,aight,top_tier',
         ]);
 
         AnimeTracking::updateOrCreate(
@@ -132,7 +131,7 @@ class AnimeController extends Controller
             [
                 'watched_episodes' => (int) $validated['watched_episodes'],
                 'status' => $validated['status'],
-                'score' => $validated['score'],
+                'score' => $this->ratingTierToScore($validated['rating_tier'] ?? null),
             ]
         );
 
@@ -171,5 +170,34 @@ class AnimeController extends Controller
             'sort' => $sort,
             'type' => $type,
         ];
+    }
+
+    private function ratingTierToScore(?string $ratingTier): ?float
+    {
+        return match ($ratingTier) {
+            'meh' => 4.0,
+            'aight' => 7.0,
+            'top_tier' => 10.0,
+            default => null,
+        };
+    }
+
+    private function scoreToRatingTier($score): ?string
+    {
+        if ($score === null) {
+            return null;
+        }
+
+        $score = (float) $score;
+
+        if ($score >= 9.0) {
+            return 'top_tier';
+        }
+
+        if ($score >= 6.0) {
+            return 'aight';
+        }
+
+        return 'meh';
     }
 }

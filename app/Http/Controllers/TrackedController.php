@@ -11,9 +11,9 @@ class TrackedController extends Controller
     public function index(Request $request, AniListService $anilist)
     {
         $statusOptions = ['watching', 'completed', 'plan_to_watch', 'paused', 'all'];
-        $selectedStatus = $request->query('status', 'watching');
+        $selectedStatus = $request->query('status', 'all');
         if (!in_array($selectedStatus, $statusOptions, true)) {
-            $selectedStatus = 'watching';
+            $selectedStatus = 'all';
         }
 
         $trackingsQuery = AnimeTracking::query()
